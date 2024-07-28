@@ -36,6 +36,10 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect().catch(error => {
   console.error('Error connecting to MongoDB:', error);
 });
+const database = client.db(dbName);
+const collection = database.collection(collectionName);
+
+
 app.post('/register', upload.single('paymentScreenshot'), async (req, res) => {
   console.log('Received request body:', req.body);
   console.log('Received file:', req.file);
