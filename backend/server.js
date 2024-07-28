@@ -78,17 +78,17 @@ app.get('/table', async (req, res) => {
         const collection = database.collection(collectionName);
 
         const query = {
-            name: req.query.name,
-            gender: req.query.gender,
-            dob: req.query.dob,
-            email: req.query.email,
-            phone: req.query.phone,
-            regNo: req.query.regNo,
-            course: req.query.course,
-            program:req.body.program,
-            blood:req.body.bloodGroup,    
-            hORd: req.query.hORd,
-            hostelID: req.query.hostelID
+            // name: req.query.name,
+            // gender: req.query.gender,
+            // dob: req.query.dob,
+            // email: req.query.email,
+            // phone: req.query.phone,
+            // regNo: req.query.regNo,
+            // course: req.query.course,
+            // program:req.body.program,
+            // blood:req.body.bloodGroup,    
+            // hORd: req.query.hORd,
+            // hostelID: req.query.hostelID
         };
 
         const results = await collection.find(query).toArray();
@@ -141,6 +141,9 @@ app.post('/admin-login', async (req, res) => {
         await client.close();
     }
 });
+app.get('/',(req,res)=>{
+  res.send('Hello World!')
+})
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`)
 });
