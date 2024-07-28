@@ -33,42 +33,37 @@ app.use(express.json());
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-client.connect().then(() => {
-  const database = client.db(dbName);
-  const collection = database.collection(collectionName);
-
-  app.post('/register', upload.single('paymentScreenshot'), async (req, res) => {
-    console.log('Received request body:', req.body);
-    console.log('Received file:', req.file);
-
-    const registrationData = {
-      name: req.body.name,
-      gender: req.body.gender,
-      dob: req.body.dob,
-      email: req.body.email,
-      phone: req.body.phone,
-      regNo: req.body.regNo,
-      course: req.body.course,
-      program: req.body.program,
-      blood: req.body.bloodGroup,
-      hORd: req.body.hORd,
-      hostelID: req.body.hostelID,
-      paymentScreenshot: req.file ? req.file.path : null,
-    };
-
-    try {
-      const result = await collection.insertOne(registrationData);
-      console.log('Registration data stored in MongoDB:', result.insertedId);
-
-      res.status(200).send('Registration successful!');
-    } catch (error) {
-      console.error('Error storing data in MongoDB:', error);
-      res.status(500).send('Error storing data');
-    }
-  });
-
-}).catch(error => {
+client.connect().catch(error => {
   console.error('Error connecting to MongoDB:', error);
+});
+app.post('/register', upload.single('paymentScreenshot'), async (req, res) => {
+  console.log('Received request body:', req.body);
+  console.log('Received file:', req.file);
+
+  const registrationData = {
+    name: req.body.name,
+    gender: req.body.gender,
+    dob: req.body.dob,
+    email: req.body.email,
+    phone: req.body.phone,
+    regNo: req.body.regNo,
+    course: req.body.course,
+    program: req.body.program,
+    blood: req.body.bloodGroup,
+    hORd: req.body.hORd,
+    hostelID: req.body.hostelID,
+    paymentScreenshot: req.file ? req.file.path : null,
+  };
+
+  try {
+    const result = await collection.insertOne(registrationData);
+    console.log('Registration data stored in MongoDB:', result.insertedId);
+
+    res.status(200).send('Registration successful!');
+  } catch (error) {
+    console.error('Error storing data in MongoDB:', error);
+    res.status(500).send('Error storing data');
+  }
 });
 
 app.get('/table', async (req, res) => {

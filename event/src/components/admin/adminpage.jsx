@@ -15,7 +15,7 @@ const AdminPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:${port}/table`);
+        const response = await fetch(`https://event-website-main.onrender.com/table`);
         const data = await response.json();
         console.log("API Response:", data); // Log the full response
 

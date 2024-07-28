@@ -72,7 +72,7 @@ const RegistrationPage = () => {
 
     setLoading(true);
     axios
-      .post("http://localhost:5000/register", formData)
+      .post("https://event-website-main.onrender.com/register", formData)
       .then(() => {
         alert("Registration successful!");
         setPaymentConfirmed(false);
