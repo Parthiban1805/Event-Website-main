@@ -1,0 +1,78 @@
+.table-section,
+.recents-section {
+  margin: 10px;
+  width: 98vw;
+  border-radius: 12px;
+
+  padding: 10px;
+}
+
+.table-title {
+  font-size: 15px;
+  padding-left: 10px;
+  color: #929292;
+  margin-bottom: 10px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table-content,
+.recents-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-content th,
+.table-content td,
+.recents-table th,
+.recents-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.table-content th,
+.recents-table th {
+  white-space: nowrap;
+  background-color: #f2f2f2;
+  color: #333333;
+}
+
+.table-content tr:hover,
+.recents-table tr:hover {
+  background-color: #84848484;
+  color: #000;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #ededed;
+  color: #000000;
+  border-radius: 4px;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:hover {
+  background-color: #6161619f;
+}
+
+.next {
+  margin-left: 90%;
+}

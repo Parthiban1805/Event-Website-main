@@ -1,0 +1,60 @@
+import React, { useEffect, useState } from "react";
+import Table from "./table";
+import "./adminpage.css";
+const port = 5000;
+
+const AdminPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [reservationDetails, setReservationDetails] = useState([]);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:${port}/table`);
+        const data = await response.json();
+        console.log("API Response:", data); // Log the full response
+
+        if (response.ok) {
+          console.log("Data fetched successfully", data);
+          setReservationDetails(data.reservation_details || []);
+        } else {
+          console.error({ Error: data.error });
+        }
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = reservationDetails.slice(indexOfFirstItem, indexOfLastItem);
+
+  return (
+    <div className="admin-page-container">
+      <div className="admin-page-header">
+        <p>Admin Dashboard</p>
+      </div>
+      <div className="admin-page-content">
+        <div className="admin-page-reservation-details">
+          <Table
+            title="Registration details"
+            items={currentItems}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={reservationDetails.length}
+            paginate={paginate}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminPage;
