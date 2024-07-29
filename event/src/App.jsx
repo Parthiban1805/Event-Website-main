@@ -1,14 +1,15 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Footer from "./components/footer/footer";
 import Navbar from "./components/navbar/navbar";
-import Home from "./routes/home/home";
+import About from "./routes/about/about";
+import Contact from "./routes/contact/contact";
+import Home1 from "./routes/home/home1";
 import RegistrationPage from "./routes/registration/registration";
-import About from "./components/about/about";
-import Sponsors from "./components/sponsors/sponsors";
-import Contact from "./components/contact/contact";
-import AdminLogin from "./components/signup/signup";
-import AdminPage from "./components/admin/adminpage";
+import Sponsors from "./routes/sponsors/sponsors";
+import AdminPage from './components/admin/adminpage';
+import AdminLogin from './components/signup/signup';
 
 
 const App = () => {
@@ -17,15 +18,17 @@ const App = () => {
     <Navbar/>
       <Routes>
         <Route path="registration" element={<RegistrationPage />} />
-        <Route path="" element={<Home />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="" element={<Home1 />} />
+        <Route path="/home" element={<Home1 />} />
+
+        <Route path="/admin" element={<AdminPage/>} />
 
         <Route path="/admin-login" element={<AdminLogin/>} />
-        <Route path="home" element={<Home />} />
         <Route path='about' element={<About />}/>
         <Route path='sponsors' element={<Sponsors />}/>
         <Route path='contact' element={<Contact />}/>
       </Routes>
+      <Footer/>
     </BrowserRouter>
   );
 };

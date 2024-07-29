@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "./table";
 import "./adminpage.css";
-const port = 5000;
 
 const AdminPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,13 +16,17 @@ const AdminPage = () => {
       try {
         const response = await fetch(`https://event-website-main.onrender.com/table`);
         const data = await response.json();
-        console.log("API Response:", data); // Log the full response
+        console.log("Full API Response:"); 
 
         if (response.ok) {
-          console.log("Data fetched successfully", data);
-          setReservationDetails(data.reservation_details || []);
+          if (Array.isArray(data)) {
+            console.log("Data fetched successfully");
+            setReservationDetails(data);
+          } else {
+            console.error("Unexpected data format:", JSON.stringify(data, null, 2));
+          }
         } else {
-          console.error({ Error: data.error });
+          console.error("API Error:", data.error);
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -35,6 +38,9 @@ const AdminPage = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = reservationDetails.slice(indexOfFirstItem, indexOfLastItem);
+
+  // console.log("Reservation Details:", reservationDetails); 
+  // console.log("Current Items:", currentItems); 
 
   return (
     <div className="admin-page-container">

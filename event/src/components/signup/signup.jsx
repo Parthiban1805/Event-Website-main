@@ -32,7 +32,7 @@ const AdminLogin = () => {
     if (!valid) return;
 
     try {
-      const response = await fetch(`http://localhost:${port}/admin-login`, {
+      const response = await fetch(`https://event-website-main.onrender.com/admin-login`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -45,11 +45,11 @@ const AdminLogin = () => {
       if (contentType && contentType.includes("application/json")) {
         const data = await response.json();
         if (response.ok) {
-          console.log("Signin successful:", data);
+          console.log("Signin successful:");
           navigate("/admin");
         } else {
           setLoginError(data.message || "Signin failed");
-          console.error("Signin failed:", data);
+          console.error("Signin failed:",);
         }
       } else {
         const text = await response.text();

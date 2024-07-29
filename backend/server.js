@@ -5,7 +5,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
-
+const bodyParser=require('body-parser');
 const app = express();
 const port = 5000;
 
@@ -30,6 +30,7 @@ const upload = multer({ storage: storage });
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -39,10 +40,9 @@ client.connect().catch(error => {
 const database = client.db(dbName);
 const collection = database.collection(collectionName);
 
-
 app.post('/register', upload.single('paymentScreenshot'), async (req, res) => {
-  console.log('Received request body:', req.body);
-  console.log('Received file:', req.file);
+  console.log('Received request body:');
+  console.log('Received file:');
 
   const registrationData = {
     name: req.body.name,
@@ -77,21 +77,11 @@ app.get('/table', async (req, res) => {
         const collection = database.collection(collectionName);
 
         const query = {
-            // name: req.query.name,
-            // gender: req.query.gender,
-            // dob: req.query.dob,
-            // email: req.query.email,
-            // phone: req.query.phone,
-            // regNo: req.query.regNo,
-            // course: req.query.course,
-            // program:req.body.program,
-            // blood:req.body.bloodGroup,    
-            // hORd: req.query.hORd,
-            // hostelID: req.query.hostelID
+
         };
 
         const results = await collection.find(query).toArray();
-        console.log('Data fetched successfully:', results);
+        console.log('Data fetched successfully:');
 
         res.status(200).json(results);
     } catch (error) {
@@ -115,12 +105,12 @@ app.post('/admin-login', async (req, res) => {
         const admin = await collection.findOne({ email });
 
         if (admin) {
-            console.log('User found:', admin);
+            console.log('User found:');
 
-            console.log('Stored hash:', admin.password);
+            console.log('Stored hash:');
 
             const isMatch = await bcrypt.compare(password, admin.password);
-            console.log('Password match result:', isMatch);
+            console.log('Password match result:');
 
             if (isMatch) {
                 console.log('Password match, signin successful');

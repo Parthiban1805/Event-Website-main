@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './table.css'; 
+import './table.css';
 
 const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }) => {
+  console.log('Items in Table:');
+
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="table-section">
@@ -20,7 +18,7 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }
       </div>
 
       <div className="table-container">
-        <table className='table-content'> 
+        <table className="table-content">
           <thead>
             <tr>
               <th>Name</th>
@@ -36,7 +34,7 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((item, index) => (
+            {items.map((item, index) => (
               <tr key={index}>
                 <td>{item.name}</td>
                 <td>{item.gender}</td>
@@ -71,7 +69,7 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }
         <button
           className="next"
           onClick={() => paginate(currentPage + 1)}
-          disabled={currentItems.length < itemsPerPage}
+          disabled={currentPage === Math.ceil(totalItems / itemsPerPage)}
         >
           Next
         </button>
