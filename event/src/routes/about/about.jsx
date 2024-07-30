@@ -121,7 +121,7 @@ const About = () => {
             <p> Fine Arts Team</p>
           </div>
         </div>
-        <h1 id="team-members-title1">Group Leads</h1>
+        <h1 id="team-members-title2">Group Leads</h1>
         <div className="vertical-line"></div>
         <div className="team-member-image-container">
         <div className="tm-image-container">
