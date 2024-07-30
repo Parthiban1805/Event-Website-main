@@ -33,10 +33,12 @@
 }
 
 .card-description {
+  list-style: none;
+  text-decoration: none;
   text-align: left;
   color: black;
+  padding-left: 20px;
   font-size: 1rem;
-  padding: 0 10px 20px 60px;
 }
 
 .carousel-button {

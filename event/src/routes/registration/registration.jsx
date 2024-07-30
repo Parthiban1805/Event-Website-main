@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./registration.css";
+import swal from "sweetalert"; 
 
 const RegistrationPage = () => {
   const [name, setName] = useState("");
@@ -74,7 +75,24 @@ const RegistrationPage = () => {
     axios
       .post("https://event-website-main.onrender.com/register", formData)
       .then(() => {
-        alert("Registration successful!");
+        swal({
+          title: "Registration Successful!",
+          text: "For any queries, please contact:",
+          content: {
+            element: "div",
+            attributes: {
+              innerHTML: `
+                <p>For any queries, please contact:</p>
+                <ul>
+                  <li>Lakshan Raghav J R: <a href="tel:+918610590584">+91 86105 90584</a></li>
+                  <li>Harshavardhan: <a href="tel:+919963652827">+91 99636 52827</a></li>
+                  <li>Vikirthan: <a href="tel:+918190022020">+91 81900 22020</a></li>
+                </ul>
+              `
+            }
+          },
+          icon: "success"
+        });
         setPaymentConfirmed(false);
         setShowPaymentOptions(false);
         setName("");
@@ -94,7 +112,7 @@ const RegistrationPage = () => {
       })
       .catch((error) => {
         console.error("Error storing data: ", error);
-        alert("Registration failed. Please try again.");
+        swal("Registration failed", "Please try again.", "error");
       })
       .finally(() => {
         setLoading(false);
@@ -107,12 +125,12 @@ const RegistrationPage = () => {
 
   const handlePaymentConfirmation = () => {
     if (!paymentScreenshot) {
-      alert("Please upload a screenshot of the payment.");
+      swal("Error", "Please upload a screenshot of the payment.", "error");
       return;
     }
 
     setPaymentConfirmed(true);
-    alert("Payment confirmed successfully!");
+    swal("Payment confirmed", "Your payment has been confirmed successfully!", "success");
   };
 
   const handlePaymentClick = () => {
@@ -276,7 +294,7 @@ const RegistrationPage = () => {
         {showPaymentOptions && (
           <div>
             <div className="field">
-              <h3 className="field-title">UPI ID: parthi1805@axl</h3>
+              <h3 className="field-title">UPI ID:vikirthan06-1@oksbi</h3>
               <a href={upiLink} target="_blank" rel="noopener noreferrer">
                 <p type="button">
                   Pay ₹99
