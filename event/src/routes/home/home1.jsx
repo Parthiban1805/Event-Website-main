@@ -85,6 +85,10 @@ const Home = () => {
                 </p>
                 <div className="events-card-container1">
                     <Card title="Rivals on the pitch" img={placeholder} navlink={"/registration"} />
+                    <Card title="Smash it " img={placeholder} navlink={"/registration"} />
+                    <Card title="Run for equality 2023" img={placeholder} navlink={"/registration"} />
+
+
                 </div>
             </div>
         </div>
