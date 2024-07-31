@@ -7,41 +7,20 @@ const AdminPage = () => {
   const itemsPerPage = 10;
   const [reservationDetails, setReservationDetails] = useState([]);
   const [allData, setAllData] = useState([]);
+  const [viewAll, setViewAll] = useState(false);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://event-website-main.onrender.com/table`);
-        const data = await response.json();
-        
-        if (response.ok) {
-          if (Array.isArray(data)) {
-            setReservationDetails(data);
-          } else {
-            console.error("Unexpected data format:", JSON.stringify(data, null, 2));
-          }
-        } else {
-          console.error("API Error:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const fetchAllData = async () => {
+  const fetchData = async () => {
     try {
       const response = await fetch(`https://event-website-main.onrender.com/table`);
       const data = await response.json();
-      
       if (response.ok) {
         if (Array.isArray(data)) {
-          setAllData(data);
+          setReservationDetails(data);
+          setAllData(data);  // This will hold all data initially.
         } else {
           console.error("Unexpected data format:", JSON.stringify(data, null, 2));
         }
@@ -53,9 +32,13 @@ const AdminPage = () => {
     }
   };
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = reservationDetails.slice(indexOfFirstItem, indexOfLastItem);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchAllData = () => {
+    setViewAll(!viewAll);
+  };
 
   return (
     <div className="admin-page-container">
@@ -66,13 +49,12 @@ const AdminPage = () => {
         <div className="admin-page-reservation-details">
           <Table
             title="Registration details"
-            items={currentItems}
+            items={reservationDetails}
             currentPage={currentPage}
             itemsPerPage={itemsPerPage}
-            totalItems={reservationDetails.length}
             paginate={paginate}
             fetchAllData={fetchAllData}
-            allData={allData}
+            viewAll={viewAll}
           />
         </div>
       </div>

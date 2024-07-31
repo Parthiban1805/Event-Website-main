@@ -89,3 +89,15 @@
 .next {
   margin-left: 90%;
 }
+
+/* New CSS for count display */
+.count-display {
+  margin: 20px 0;
+  font-size: 30px;
+  color: #f0f0f0;
+  font-weight: bold;
+}
+
+.count-display p {
+  margin: 0;
+}

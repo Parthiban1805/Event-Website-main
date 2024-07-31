@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './table.css';
 
-const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate, fetchAllData, allData }) => {
+const Table = ({ title, items, currentPage, itemsPerPage, paginate, fetchAllData, viewAll }) => {
   const [search, setSearch] = useState('');
-  const [viewAll, setViewAll] = useState(false);
 
-  useEffect(() => {
-    if (viewAll && allData.length === 0) {
-      fetchAllData();
-    }
-  }, [viewAll, fetchAllData, allData.length]);
-
-  const filteredItems = (viewAll ? allData : items).filter((item) =>
+  const filteredItems = items.filter((item) =>
     search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search)
   );
 
-  const paginatedItems = filteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  const displayedItems = viewAll ? filteredItems : paginatedItems;
+  const displayedItems = viewAll ? filteredItems : filteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(filteredItems.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <div className="table-section">
@@ -38,10 +28,15 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate, 
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
+
       <div className='view-all'>
-        <button onClick={() => setViewAll(!viewAll)}>
-          {viewAll ? 'View Paginated ' : 'View All'}
+        <button onClick={fetchAllData}>
+          {viewAll ? 'View Paginated' : 'View All'}
         </button>
+      </div>
+
+      <div className="count-display">
+        <p>Total Registrations: {filteredItems.length}</p>
       </div>
 
       <div className="table-container">
@@ -108,7 +103,7 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate, 
           <button
             className="next"
             onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === Math.ceil(filteredItems.length / itemsPerPage)}
+            disabled={currentPage === totalPages}
           >
             Next
           </button>
@@ -123,10 +118,9 @@ Table.propTypes = {
   items: PropTypes.array.isRequired,
   currentPage: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
-  totalItems: PropTypes.number.isRequired,
   paginate: PropTypes.func.isRequired,
   fetchAllData: PropTypes.func.isRequired,
-  allData: PropTypes.array.isRequired,
+  viewAll: PropTypes.bool.isRequired,
 };
 
 export default Table;
