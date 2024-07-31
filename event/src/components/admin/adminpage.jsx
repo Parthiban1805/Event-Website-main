@@ -6,6 +6,7 @@ const AdminPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [reservationDetails, setReservationDetails] = useState([]);
+  const [allData, setAllData] = useState([]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -16,11 +17,9 @@ const AdminPage = () => {
       try {
         const response = await fetch(`https://event-website-main.onrender.com/table`);
         const data = await response.json();
-        console.log("Full API Response:"); 
-
+        
         if (response.ok) {
           if (Array.isArray(data)) {
-            console.log("Data fetched successfully");
             setReservationDetails(data);
           } else {
             console.error("Unexpected data format:", JSON.stringify(data, null, 2));
@@ -35,12 +34,28 @@ const AdminPage = () => {
     fetchData();
   }, []);
 
+  const fetchAllData = async () => {
+    try {
+      const response = await fetch(`https://event-website-main.onrender.com/table`);
+      const data = await response.json();
+      
+      if (response.ok) {
+        if (Array.isArray(data)) {
+          setAllData(data);
+        } else {
+          console.error("Unexpected data format:", JSON.stringify(data, null, 2));
+        }
+      } else {
+        console.error("API Error:", data.error);
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = reservationDetails.slice(indexOfFirstItem, indexOfLastItem);
-
-  // console.log("Reservation Details:", reservationDetails); 
-  // console.log("Current Items:", currentItems); 
 
   return (
     <div className="admin-page-container">
@@ -56,6 +71,8 @@ const AdminPage = () => {
             itemsPerPage={itemsPerPage}
             totalItems={reservationDetails.length}
             paginate={paginate}
+            fetchAllData={fetchAllData}
+            allData={allData}
           />
         </div>
       </div>

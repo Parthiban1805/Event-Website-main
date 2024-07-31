@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './table.css';
 
-const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }) => {
+const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate, fetchAllData, allData }) => {
   const [search, setSearch] = useState('');
+  const [viewAll, setViewAll] = useState(false);
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  useEffect(() => {
+    if (viewAll && allData.length === 0) {
+      fetchAllData();
+    }
+  }, [viewAll, fetchAllData, allData.length]);
 
-  const filteredItems = items.filter((item) =>
+  const filteredItems = (viewAll ? allData : items).filter((item) =>
     search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search)
   );
+
+  const paginatedItems = filteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const displayedItems = viewAll ? filteredItems : paginatedItems;
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredItems.length / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <div className="table-section">
@@ -27,6 +37,11 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+      </div>
+      <div className='view-all'>
+        <button onClick={() => setViewAll(!viewAll)}>
+          {viewAll ? 'View Paginated ' : 'View All'}
+        </button>
       </div>
 
       <div className="table-container">
@@ -46,8 +61,8 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }
             </tr>
           </thead>
           <tbody>
-            {filteredItems.length > 0 ? (
-              filteredItems.map((item, index) => (
+            {displayedItems.length > 0 ? (
+              displayedItems.map((item, index) => (
                 <tr key={index}>
                   <td>{item.name}</td>
                   <td>{item.gender}</td>
@@ -76,27 +91,29 @@ const Table = ({ title, items, currentPage, itemsPerPage, totalItems, paginate }
         </table>
       </div>
 
-      <div className="pagination">
-        <button
-          className="previous"
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        {pageNumbers.map(number => (
-          <button key={number} onClick={() => paginate(number)}>
-            {number}
+      {!viewAll && (
+        <div className="pagination">
+          <button
+            className="previous"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
           </button>
-        ))}
-        <button
-          className="next"
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(totalItems / itemsPerPage)}
-        >
-          Next
-        </button>
-      </div>
+          {pageNumbers.map(number => (
+            <button key={number} onClick={() => paginate(number)}>
+              {number}
+            </button>
+          ))}
+          <button
+            className="next"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === Math.ceil(filteredItems.length / itemsPerPage)}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
@@ -108,6 +125,8 @@ Table.propTypes = {
   itemsPerPage: PropTypes.number.isRequired,
   totalItems: PropTypes.number.isRequired,
   paginate: PropTypes.func.isRequired,
+  fetchAllData: PropTypes.func.isRequired,
+  allData: PropTypes.array.isRequired,
 };
 
 export default Table;
