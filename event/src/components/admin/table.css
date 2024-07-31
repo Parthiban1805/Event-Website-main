@@ -3,7 +3,6 @@
   margin: 10px;
   width: 98vw;
   border-radius: 12px;
-
   padding: 10px;
 }
 
@@ -13,6 +12,19 @@
   padding-left: 10px;
   color: #929292;
   margin-bottom: 10px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search-container input {
+  padding: 8px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .table-container {
