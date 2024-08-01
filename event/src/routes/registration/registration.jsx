@@ -28,9 +28,9 @@ const RegistrationPage = () => {
   useEffect(() => {
     if (hORd === "Hosteller") {
       if (gender === "male") {
-        setHostelNo("BH");
+        setHostelNo("BH-");
       } else if (gender === "female") {
-        setHostelNo("GH");
+        setHostelNo("GH-");
       }
     } else {
       setHostelNo(""); 
@@ -280,12 +280,12 @@ const RegistrationPage = () => {
             <input
               type="text"
               className="field-input"
-              value={hostelNo}
-              readOnly
+              value={hostelNo} 
+              onChange={(e) => setHostelNo(e.target.value)} 
             />
           </div>
         )}
-        <div className="field">
+          <div className="field">
           <h3 className="field-title">Confirm payment</h3>
           <button
             className="confirm-button"
