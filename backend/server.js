@@ -56,7 +56,7 @@ app.post('/register', upload.single('paymentScreenshot'), async (req, res) => {
     blood: req.body.bloodGroup,
     hORd: req.body.hORd,
     hostelID: req.body.hostelID,
-    paymentScreenshot: req.file ? req.file.path : null,
+    paymentScreenshot: req.file ? path.basename(req.file.path) : null,
   };
 
   try {
@@ -65,10 +65,11 @@ app.post('/register', upload.single('paymentScreenshot'), async (req, res) => {
 
     res.status(200).send('Registration successful!');
   } catch (error) {
-    console.error('Error storing data in MongoDB:', error);
-    res.status(500).send('Error storing data');
+    console.error('Error storing data in MongoDB:', error.message);
+    res.status(500).send(`Error storing data: ${error.message}`);
   }
 });
+
 
 app.get('/table', async (req, res) => {
     try {

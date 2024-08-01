@@ -27,9 +27,13 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     if (hORd === "Hosteller") {
-      setHostelNo(gender === "male" ? "BH" : gender === "female" ? "GH" : "");
+      if (gender === "male") {
+        setHostelNo("BH");
+      } else if (gender === "female") {
+        setHostelNo("GH");
+      }
     } else {
-      setHostelNo("");
+      setHostelNo(""); 
     }
   }, [gender, hORd]);
 
