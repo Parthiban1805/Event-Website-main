@@ -5,8 +5,11 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./registration.css";
 import swal from "sweetalert"; 
+import { useNavigate } from "react-router-dom";
 
 const RegistrationPage = () => {
+  const navigate = useNavigate(); // Create a navigate function
+
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
@@ -96,7 +99,10 @@ const RegistrationPage = () => {
             }
           },
           icon: "success"
+        }).then(() => {
+          navigate("/run-for-equality"); 
         });
+
         setPaymentConfirmed(false);
         setShowPaymentOptions(false);
         setName("");
@@ -285,7 +291,7 @@ const RegistrationPage = () => {
             />
           </div>
         )}
-          <div className="field">
+        <div className="field">
           <h3 className="field-title">Confirm payment</h3>
           <button
             className="confirm-button"

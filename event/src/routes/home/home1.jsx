@@ -8,6 +8,7 @@ import rfe from '../../assets/runforequality.png';
 import swachhbharat from '../../assets/SWACHH BHARAT/img3.png';
 import bg from '../../assets/Untitled (1).png';
 import Card from '../../components/card/card';
+import Run_for_equality_2023 from '../../assets/Run_for_equality-2023.jpg'
 import './home1.css';
 
 const Home = () => {
@@ -86,7 +87,7 @@ const Home = () => {
                 <div className="events-card-container1">
                     <Card title="Rivals on the pitch" img={placeholder} navlink={"/"} />
                     <Card title="Smash it " img={placeholder} navlink={"/"} />
-                    <Card title="Run for equality 2023" img={placeholder} navlink={"/"} />
+                    <Card title="Run for equality 2023" img={Run_for_equality_2023} navlink={"/"} />
 
 
                 </div>
