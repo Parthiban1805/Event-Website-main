@@ -118,7 +118,7 @@
 
     max-width: 300px;
   }
-  
+
   .team-member-image {
     width: 250px;
     height: 250px;
@@ -139,7 +139,15 @@
     margin-top: 0.5rem;
     color: inherit;
   }
+  .team-member-image-container img,
+  .about-gallery-img {
+    transition: transform 0.3s ease-in-out;
+  }
   
+  .team-member-image-container img:hover,
+  .about-gallery-img img:hover {
+    transform: scale(1.1);
+  }
   
   /* Responsive Styles */
   @media (max-width: 1200px) {

@@ -12,12 +12,17 @@ import AdminPage from './components/admin/adminpage';
 import AdminLogin from './components/signup/signup';
 import Run_for_equality from './routes/run-for-equality/run_for_equality';
 import Loader from './components/loader/loader'
+import NotFound from './components/notfound/notfound'; 
+
 import { IoCloudOffline } from "react-icons/io5"; 
 
 const Layout = ({ children }) => {
   const location = useLocation();
   const isAdminRoute = location.pathname === '/admin' || location.pathname === '/admin-login';
-  
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, [location]);
+
   return (
     <>
       {!isAdminRoute && <Navbar />}
@@ -98,6 +103,8 @@ const App = () => {
               <Route path='sponsors' element={<Sponsors />} />
               <Route path='contact' element={<Contact />} />
               <Route path='run-for-equality' element={<Run_for_equality />} />
+              <Route path="*" element={<NotFound />} /> {/* Handle 404 */}
+
             </Routes>
           </Layout>
         )}

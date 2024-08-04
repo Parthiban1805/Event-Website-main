@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import './cardcarousel.css';
 
 const CardCarousel = () => {
   const sponsors = [
     {
-    //   name: '₹ 1,50,000',
+      // name: '₹ 1,50,000',
       benefits: [
         '• Naming Rights',
         '• Top-Tier Branding',
@@ -15,7 +18,7 @@ const CardCarousel = () => {
       ]
     },
     {
-    //   name: '₹ 1,00,000',
+      // name: '₹ 1,00,000',
       benefits: [
         '• Event Shirt Logo',
         '• Frontline Banner Position',
@@ -25,7 +28,7 @@ const CardCarousel = () => {
       ]
     },
     {
-    //   name: '₹ 50,000',
+      // name: '₹ 50,000',
       benefits: [
         '• Logo On Event Website',
         '• Program Mention',
@@ -36,7 +39,7 @@ const CardCarousel = () => {
       ]
     },
     {
-    //   name: '₹ 25,000',
+      // name: '₹ 25,000',
       benefits: [
         '• Logo On Event Website',
         '• Program Mention',
@@ -45,7 +48,7 @@ const CardCarousel = () => {
       ]
     },
     {
-    //   name: '₹ 10,000',
+      // name: '₹ 10,000',
       benefits: [
         '• Logo On Event Website',
         '• Logo On Event Materials',
@@ -53,7 +56,7 @@ const CardCarousel = () => {
       ]
     },
     {
-    //   name: '₹:?/goodies:?',
+      // name: '₹:?/goodies:?',
       benefits: [
         '• Frame your own benefits and sponsorship amount or goodies'
       ]
@@ -63,6 +66,10 @@ const CardCarousel = () => {
   const duplicatedSponsors = [...sponsors, ...sponsors]; // Duplicate the array for infinite scrolling
   const totalCards = sponsors.length;
   const [currentIndex, setCurrentIndex] = useState(totalCards);
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
 
   const next = () => {
     if (currentIndex < duplicatedSponsors.length - 3) {
@@ -93,16 +100,26 @@ const CardCarousel = () => {
             transition: 'transform 0.5s ease-in-out'
           }}
         >
-          {duplicatedSponsors.map((sponsor, index) => (
-            <div className="card" key={index}>
-              <h3 className="card-name">{sponsor.name}</h3>
-              <ul className="card-description">
-                {sponsor.benefits.map((benefit, idx) => (
-                  <li key={idx}>{benefit}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <AnimatePresence>
+            {duplicatedSponsors.map((sponsor, index) => (
+              <motion.div
+                className="card"
+                key={index}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                data-aos="fade-up"
+              >
+                <h3 className="card-name">{sponsor.name}</h3>
+                <ul className="card-description">
+                  {sponsor.benefits.map((benefit, idx) => (
+                    <li key={idx}>{benefit}</li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
       <button className="carousel-button next" onClick={next}>

@@ -10,6 +10,13 @@
   position: relative;
   margin: 20px;
   transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.card-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: white;
 }
 
 .card-image {
@@ -17,6 +24,11 @@
   height: 80%;
   object-fit: cover;
   background-color: #fff;
+  transition: transform 0.5s ease;
+}
+
+.card-container:hover .card-image {
+  transform: scale(1.1);
 }
 
 .card-text {
@@ -24,6 +36,7 @@
   display: flex;
   align-items: center;
   text-align: center;
+  transition: background-color 0.3s ease;
 }
 
 .card-title {
@@ -33,6 +46,11 @@
   justify-content: center;
   text-align: center;
   font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.card-container:hover .card-title {
+  color: #ff4500; /* Change title color on hover */
 }
 
 .card-nav {
@@ -42,4 +60,18 @@
   position: absolute;
   bottom: 15px;
   right: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.card-container:hover .card-nav {
+  background: #ff4500;
+}
+
+.card-nav a {
+  color: #000; 
+  transition: color 0.3s ease;
+}
+
+.card-container:hover .card-nav a {
+  color: #fff; /* Change link color on hover */
 }

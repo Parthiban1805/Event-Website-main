@@ -1,0 +1,25 @@
+html {
+    scroll-behavior: smooth;
+  }
+  body{
+      overscroll-behavior: none;
+  }
+  ::-webkit-scrollbar {
+      background: transparent;
+      width: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff4500;
+    }
+    ::selection {
+      background: #ff4500;
+      color: black;
+    }
+    .element-selector:focus {
+      outline: none !important;
+    }
+    
+    .element-selector:focus {
+      outline: 2px solid transparent;
+    }
+    
